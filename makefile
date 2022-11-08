@@ -1,4 +1,4 @@
-FILES_MAIN	=	main.c				
+FILES_MAIN	=	main.c listfiles.c size.c name.c		
 
 
 S_PATH	=	src/

@@ -1,7 +1,4 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../includes/main.h"
 
 int main(int argc,char *argv[ ]) {
     // check s'il y a assez d'arguments
@@ -11,7 +8,7 @@ int main(int argc,char *argv[ ]) {
     }
     
     // char* search_dir = argv[1];  --a decommenter quand y en aura besoin
-
+    listFilesRecursively(argv[1]);
     // parcours les arguments pour parser les options de recherche
     for (int i = 2; i < argc; i = i+2 ) {
         if ( strcmp(argv[i], "-name") == 0 ) {
@@ -35,4 +32,6 @@ int main(int argc,char *argv[ ]) {
     }    
     return 0;
 }
+
+
 
