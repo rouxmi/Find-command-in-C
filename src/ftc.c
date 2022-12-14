@@ -1,7 +1,7 @@
 #include "../includes/main.h"
 
 int main(int argc,char *argv[ ]) {
-    // check sil y a assez d'arguments
+    // check sil y a assez darguments
     if (argc < 2) {
         fprintf(stderr,"Necessite au moins un pwd \n");
         exit(1);
@@ -27,8 +27,8 @@ int main(int argc,char *argv[ ]) {
             printf("choix de ctc reconnu avec pour valeur : %s \n", argv[i+1]);
         } else if ( strcmp(argv[i], "-dir" ) == 0 ) {
             printf("choix de dir reconnu avec pour valeur : %s \n", argv[i+1]);
-        } else if ( strcmp(argv[i], "-test") == 0 ) {
-            printf("choix de test reconnu avec pour valeur : %s \n", argv[i+1]);
+        //} else if ( strcmp(argv[i], "-test") == 0 ) {
+        //    printf("choix de test reconnu avec pour valeur : %s \n", argv[i+1]);
         } else {    
             printf("choix de parametre de recherche inconnu \n");
             exit(1);            
