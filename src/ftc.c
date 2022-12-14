@@ -10,6 +10,7 @@ int main(int argc,char *argv[ ]) {
     
     if (argc == 2) {
         //Pas de parametre de recherche
+        printf("%s\n", argv[1]);
         listFilesRecursively(argv[1]);
         exit(0);
     }
