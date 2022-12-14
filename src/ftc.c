@@ -1,7 +1,7 @@
 #include "../includes/main.h"
 
 int main(int argc,char *argv[ ]) {
-    // check s'il y a assez d'arguments
+    // check sil y a assez d'arguments
     if (argc < 2) {
         fprintf(stderr,"Necessite au moins un pwd \n");
         exit(1);
@@ -22,7 +22,7 @@ int main(int argc,char *argv[ ]) {
         } else if ( strcmp(argv[i], "-date") == 0 ) {
             printf("choix de date reconnu avec pour valeur : %s \n", argv[i+1]);
         } else if ( strcmp(argv[i], "-mime") == 0 ) {
-            printf("choix de mime reconnu avec pour valeur : %s \n", argv[i+1]);
+            printf("choix de mime type reconnu avec pour valeur : %s \n", argv[i+1]);
         } else if ( strcmp(argv[i], "-ctc") == 0 ) {
             printf("choix de ctc reconnu avec pour valeur : %s \n", argv[i+1]);
         } else if ( strcmp(argv[i], "-dir" ) == 0 ) {
