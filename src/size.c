@@ -46,13 +46,13 @@ void size(char* size,char* path){
 
     if (sign==moins){
         if (f_size < size_number){
-            printf("la taille colle - : %s\n",path);
+            printf("la taille colle : %s\n",path);
         }
     }
     else{
         if (sign==plus){
             if (f_size > size_number){
-                printf("la taille colle + : %s\n",path);
+                printf("la taille colle : %s\n",path);
             }
         }
         else{

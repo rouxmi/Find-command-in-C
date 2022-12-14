@@ -10,7 +10,7 @@ int main(int argc,char *argv[ ]) {
     // char* search_dir = argv[1];  --a decommenter quand y en aura besoin
     if (argc == 2) {
         //Pas de parametre de recherche
-        listFilesRecursively(argv[1]);
+        //listFilesRecursively(argv[1]);
         exit(0);
     }
     // parcours les arguments pour parser les options de recherche
