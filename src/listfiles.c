@@ -12,13 +12,13 @@ void listFilesRecursively(char *basePath)
     if (!dir)
         return;
 
-    
+
     while ((dp = readdir(dir)) != NULL)
     {
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
             
-            // création du chemin suivant à partir du chemin de départ
+            // creation du chemin suivant à partir du chemin de depart
             strcpy(path, basePath);
             strcat(path, "/");
             strcat(path, dp->d_name);
