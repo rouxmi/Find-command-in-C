@@ -12,6 +12,7 @@ void listFilesRecursively(char *basePath)
     if (!dir)
         return;
 
+    
     while ((dp = readdir(dir)) != NULL)
     {
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
@@ -22,12 +23,12 @@ void listFilesRecursively(char *basePath)
             strcat(path, "/");
             strcat(path, dp->d_name);
 
-            char* fname ="main.c";
-            name(dp->d_name,fname,path);
-            size("-500",path);
+            //char* fname ="main.c";
+            //name(dp->d_name,fname,path);
+            //size("-500",path);
 
             //print les chemins 
-            //printf("%s\n", path);
+            printf("%s\n", path);
 
             listFilesRecursively(path);
         }

@@ -2,13 +2,17 @@
 
 int main(int argc,char *argv[ ]) {
     // check s'il y a assez d'arguments
-    if (argc < 4) {
-        fprintf(stderr,"Necessite au moins un pwd et une option de recherche\n");
+    if (argc < 2) {
+        fprintf(stderr,"Necessite au moins un pwd \n");
         exit(1);
     }
     
     // char* search_dir = argv[1];  --a decommenter quand y en aura besoin
-    listFilesRecursively(argv[1]);
+    if (argc == 2) {
+        //Pas de parametre de recherche
+        listFilesRecursively(argv[1]);
+        exit(0);
+    }
     // parcours les arguments pour parser les options de recherche
     for (int i = 2; i < argc; i = i+2 ) {
         if ( strcmp(argv[i], "-name") == 0 ) {
