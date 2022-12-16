@@ -1,0 +1,14 @@
+#ifndef UNTITLED_DATE_H
+#define UNTITLED_DATE_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <stdbool.h>
+
+bool duration(char* name, char* inputDuration);
+
+#endif //UNTITLED_DATE_H
