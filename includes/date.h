@@ -9,6 +9,6 @@
 #include <errno.h>
 #include <stdbool.h>
 
-bool duration(char* name, char* inputDuration);
+bool testdate(char* name, char* inputDuration);
 
 #endif //UNTITLED_DATE_H

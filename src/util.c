@@ -139,7 +139,7 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
             }else if(strcmp(flagstab.tab[i].flagname,"-size")==0){
                 listfile=flagsize(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-date")==0){
-                //listfile=flagdate(flagstab.tab[i].flagvalue,listfile);
+                listfile=flagdate(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
                 //listfile=flagmime(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
@@ -193,3 +193,21 @@ listfile* flagname(char* name, listfile* listoffile){
     return listfile2;
 }
 
+//flag -date
+
+listfile* flagdate(char* date, listfile* listoffile){
+    char* root=listoffile->path;
+    listfile* adresselist=listoffile;
+    listfile* listfile2 = malloc(sizeof(listfile)*10);
+    listfile2->path=listoffile->path;
+    listfile2->next=NULL;
+    while(listoffile!=NULL){
+        if(testdate(listoffile->path,date)){
+            addfile(listfile2,listoffile->path);
+        }
+        listoffile=listoffile->next;
+    }
+    deleteListFile(adresselist->next,root);
+    free(adresselist);
+    return listfile2;
+}

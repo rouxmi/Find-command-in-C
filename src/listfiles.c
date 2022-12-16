@@ -23,7 +23,9 @@ void listFilesRecursively(listfile *listfile, char *Path)
         {
             // creation du chemin suivant à partir du chemin de depart
             strcpy(path, basePath);
-            strcat(path, "/");
+            if (basePath[strlen(basePath) - 1] != '/'){
+                strcat(path, "/");
+            }
             strcat(path, dp->d_name);
 
             //char* fname ="main.c";

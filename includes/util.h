@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "../includes/name.h"
 #include "../includes/size.h"
+#include "../includes/date.h"
 
 
 
@@ -45,3 +46,5 @@ void deleteListFile(listfile* listfile,char* root);
 listfile* flagname(char* name, listfile* listoffile);
 
 listfile* flagsize(char* size, listfile* listoffile);
+
+listfile* flagdate(char* date, listfile* listoffile);

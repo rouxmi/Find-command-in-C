@@ -1,6 +1,6 @@
 #include "../includes/date.h"
 
-bool duration(char* file, char* inputDuration){
+bool testdate(char* file, char* inputDuration){
     struct stat file_info;
     int status = stat(file, &file_info);
     if (status != 0) {

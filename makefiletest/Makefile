@@ -1,25 +1,4 @@
-<<<<<<< HEAD
-FILES_MAIN	=	ftc.c listfiles.c name.c size.c util.c 			
-=======
-ftc: ftc.o listfiles.o size.o name.o date.o
-	gcc ftc.o listfiles.o size.o name.o -o ftc 
-
-ftc.o: src/ftc.c
-	gcc -c -Wall src/ftc.c 
-
-listfiles.o: src/listfiles.c
-	gcc -c -Wall src/listfiles.c
-
-name.o : src/name.c
-	gcc -c -Wall src/name.c
-
-size.o : src/size.c
-	gcc -c -Wall src/size.c
->>>>>>> 80dec6e5b348ce54c9cb5c5a5c8be736a5151b6b
-
-date.o : src/date.c
-	gcc -c -Wall src/date.c
-
+FILES_MAIN	=	ftc.c listfiles.c name.c size.c util.c date.c		
 
 
 S_PATH	=	src/
