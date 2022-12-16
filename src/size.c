@@ -45,7 +45,6 @@ bool testsize(char* size,char* path){
     long double size_number= convert_unit(insh,unit);
     long double f_size = st.st_size;
 
-
     if (sign==moins){
         if (f_size < size_number){
             return true;
