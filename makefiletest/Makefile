@@ -27,7 +27,7 @@ ftc:		${OBJS_MAIN}
 			@echo ""
 			@echo "${BOLD}${PURPLE}Building${S}${S} ${IGREY}$@${S} 🖥️"
 			@echo ""
-			@echo "\033[3;92mCompilation is completed !${S} 🎉"
+			@echo "\033[3;92mCompilation is completed !${S} 🎉]"
 
 all:		ftc
 

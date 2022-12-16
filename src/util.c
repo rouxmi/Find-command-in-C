@@ -74,7 +74,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
 void printtabflags(tabflag flagstab){
     for(int i=0; i<flagstab.size;i++){
         if(flagstab.tab[i].isflag && flagstab.tab[i].flagvalue!=NULL){
-            printf("La valeur du flag %s est %s \n",flagstab.tab[i].flagname,flagstab.tab[i].flagvalue);
+            printf("La valeur du flag %s est %s\n",flagstab.tab[i].flagname,flagstab.tab[i].flagvalue);
         }
     }
 }
@@ -102,7 +102,7 @@ listfile* getlastfile(listfile* listfile){
 void printlistfile(listfile* listfile){
     while(listfile!=NULL){
         if (strcmp(listfile->path,"end")!=0){
-            printf("%s \n",listfile->path);
+            printf("%s\n",listfile->path);
         }
         listfile=listfile->next;
     }
