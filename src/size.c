@@ -17,7 +17,7 @@ double convert_unit(int size,char unit){
     return (multi*size);
 }
 
-void size(char* size,char* path){
+bool testsize(char* size,char* path){
     char sign = size[0];
     char unit = size[strlen(size)-1];
     char plus = '+';
@@ -25,6 +25,8 @@ void size(char* size,char* path){
     char number[1000];
     long double insh;
     struct stat st;
+    
+    if (strcmp(path,"end")==0){return false;}
     
 
     if (sign==plus || sign == moins){
@@ -46,19 +48,20 @@ void size(char* size,char* path){
 
     if (sign==moins){
         if (f_size < size_number){
-            printf("la taille colle : %s\n",path);
+            return true;
         }
     }
     else{
         if (sign==plus){
             if (f_size > size_number){
-                printf("la taille colle : %s\n",path);
+                return true;
             }
         }
         else{
             if (f_size == size_number){
-            printf("la taille colle = :%s\n",path);
+                return true;
             }
         }
     }
+    return false;
 }

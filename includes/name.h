@@ -1,4 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
+#include <libgen.h>
 
-void name(char* name, char* file,char* path);
+bool testname(char* name,char* path);
+
+

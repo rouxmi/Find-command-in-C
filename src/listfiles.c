@@ -1,8 +1,13 @@
 #include "../includes/listfiles.h"
 
 //pour lister tout les fichiers d'un chemin
-void listFilesRecursively(char *basePath)
+void listFilesRecursively(listfile *listfile, char *Path)
 {
+    // creation du chemin de depart
+    char basePath[1000];
+    strcpy(basePath, Path);
+
+    
 
     char path[1000];
     struct dirent *dp;
@@ -12,12 +17,10 @@ void listFilesRecursively(char *basePath)
     if (!dir)
         return;
 
-
     while ((dp = readdir(dir)) != NULL)
     {
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-            
             // creation du chemin suivant à partir du chemin de depart
             strcpy(path, basePath);
             strcat(path, "/");
@@ -27,13 +30,13 @@ void listFilesRecursively(char *basePath)
             //name(dp->d_name,fname,path);
             //size("-500",path);
 
-            //print les chemins 
-            printf("%s\n", path);
+            addfile(listfile, path);
 
-            listFilesRecursively(path);
+            listFilesRecursively(listfile, getlastfile(listfile)->path);
         }
     }
     
     // ferme le chemin
     closedir(dir);
 }
+

@@ -1,5 +1,6 @@
 #include "../includes/ftc.h"
 
+
 int main(int argc,char *argv[ ]) {
     // check sil y a assez darguments
     if (argc < 2) {
@@ -8,33 +9,25 @@ int main(int argc,char *argv[ ]) {
     }
     
     
+    
+    // parcours les arguments pour parser les options de recherche
+    tabflag tab=getflag(argc,argv);
+
+    //parcours les fichiers et les ajoute a la liste
+    listfile* listfile=initializeListFile(argv[1]);
+    listFilesRecursively(listfile, argv[1]);
+    
     if (argc == 2) {
         //Pas de parametre de recherche
-        printf("%s\n", argv[1]);
-        listFilesRecursively(argv[1]);
+        printlistfile(listfile);
         exit(0);
     }
-    // parcours les arguments pour parser les options de recherche
-    for (int i = 2; i < argc; i = i+2 ) {
-        if ( strcmp(argv[i], "-name") == 0 ) {
-            printf("choix de nom reconnu avec pour valeur : %s \n", argv[i+1]);
-        } else if ( strcmp(argv[i], "-size") == 0 ) {
-            printf("choix de taille reconnu avec pour valeur : %s \n", argv[i+1]);
-        } else if ( strcmp(argv[i], "-date") == 0 ) {
-            printf("choix de date reconnu avec pour valeur : %s \n", argv[i+1]);
-        } else if ( strcmp(argv[i], "-mime") == 0 ) {
-            printf("choix de mime type reconnu avec pour valeur : %s \n", argv[i+1]);
-        } else if ( strcmp(argv[i], "-ctc") == 0 ) {
-            printf("choix de ctc reconnu avec pour valeur : %s \n", argv[i+1]);
-        } else if ( strcmp(argv[i], "-dir" ) == 0 ) {
-            printf("choix de dir reconnu avec pour valeur : %s \n", argv[i+1]);
-        //} else if ( strcmp(argv[i], "-test") == 0 ) {
-        //    printf("choix de test reconnu avec pour valeur : %s \n", argv[i+1]);
-        } else {    
-            printf("choix de parametre de recherche inconnu \n");
-            exit(1);            
-        }
-    }    
+    listfile=callflag(tab,listfile);
+    printlistfile(listfile);
+    
+    //free la liste de fichier et le tableau de flag
+    deleteListFile(listfile,argv[1]);
+    free(tab.tab);
     return 0;
 }
 
