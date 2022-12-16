@@ -1,12 +1,5 @@
 #include "../includes/date.h"
 
-/* tm_duration stringToDuration(char* inputDuration){
-    tm_duration duration;
-    sscanf(inputDuration, "%dj%dh%dm", &duration.days, &duration.hours, &duration.minutes);
-    return duration;
-}
- */
-
 bool duration(char* file, char* inputDuration){
     struct stat file_info;
     int status = stat(file, &file_info);
@@ -17,11 +10,12 @@ bool duration(char* file, char* inputDuration){
     time_t modificationDate = file_info.st_mtime;
     time_t currentDate = time(NULL);
     time_t difference = currentDate - modificationDate;
-    int seconds, hours, days;
-    sscanf(inputDuration, "%dj%dh%dm", &days, &hours, &seconds);
-    int duration = days*24*60*60 + hours*60*60 + seconds*60;
+    int minutes, hours, days;
+    sscanf(inputDuration, "%dj%dh%dm", &days, &hours, &minutes);
+    int duration = days*24*60*60 + hours*60*60 + minutes*60;
     if (duration < difference){
+        return false;
+    } else {
         return true;
     }
-    return false;
 }
