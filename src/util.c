@@ -1,6 +1,13 @@
 #include "../includes/util.h"
 
 
+bool is_regular_file(const char *path)
+{
+    struct stat path_stat;
+    stat(path, &path_stat);
+    return S_ISREG(path_stat.st_mode)==1;
+}
+
 tabflag getflag(int mainargc,char *mainargv[ ]){
     tabflag tab;
     tab.size=0;
@@ -164,8 +171,10 @@ listfile* flagsize(char* size, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if(testsize(size,listoffile->path)){
-            addfile(listfile2,listoffile->path);
+        if (is_regular_file(listoffile->path)){
+            if(testsize(size,listoffile->path)){
+                addfile(listfile2,listoffile->path);
+            }
         }
         listoffile=listoffile->next;
     }
@@ -183,8 +192,10 @@ listfile* flagname(char* name, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if(testname(name,listoffile->path)){
-            addfile(listfile2,listoffile->path);
+        if (is_regular_file(listoffile->path)){
+            if(testname(name,listoffile->path)){
+                addfile(listfile2,listoffile->path);
+            }
         }
         listoffile=listoffile->next;
     }
@@ -202,8 +213,10 @@ listfile* flagdate(char* date, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if(testdate(listoffile->path,date)){
-            addfile(listfile2,listoffile->path);
+        if (is_regular_file(listoffile->path)){
+            if(testdate(listoffile->path,date)){
+                addfile(listfile2,listoffile->path);
+            }
         }
         listoffile=listoffile->next;
     }

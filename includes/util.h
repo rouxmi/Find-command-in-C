@@ -48,3 +48,5 @@ listfile* flagname(char* name, listfile* listoffile);
 listfile* flagsize(char* size, listfile* listoffile);
 
 listfile* flagdate(char* date, listfile* listoffile);
+
+bool is_regular_file(const char *path);
