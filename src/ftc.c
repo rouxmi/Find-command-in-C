@@ -7,6 +7,10 @@ int main(int argc,char *argv[ ]) {
         exit(1);
     }
     
+    if (argc%2 == 1) {
+        fprintf(stderr,"Necessite une valeur pour le parametre de recherche \n");
+        exit(1);
+    }
     
     if (argc == 2) {
         //Pas de parametre de recherche
@@ -14,6 +18,7 @@ int main(int argc,char *argv[ ]) {
         listFilesRecursively(argv[1]);
         exit(0);
     }
+    
     // parcours les arguments pour parser les options de recherche
     for (int i = 2; i < argc; i = i+2 ) {
         if ( strcmp(argv[i], "-name") == 0 ) {
