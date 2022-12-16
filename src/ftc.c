@@ -8,13 +8,6 @@ int main(int argc,char *argv[ ]) {
         exit(1);
     }
     
-    // check si on ajoute un paramatre pour les options par parité du nombre d'arguments (c'est pas opti, check pas si le param est bon)
-    if (argc%2 == 1) {
-        fprintf(stderr,"Necessite une valeur pour le parametre de recherche \n");
-        exit(1);
-    }
-    
-    
     // parcours les arguments pour parser les options de recherche
     tabflag tab=getflag(argc,argv);
 
