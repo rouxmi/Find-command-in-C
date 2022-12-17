@@ -94,23 +94,6 @@ void testftcnamefaux(){
     }
 }
 
-void testftcnamefaux2(){
-    printf("test 2 ftc name faux, erreur expecté:\n");
-    system("./ftc ./ -name 3src >test.txt");
-    FILE* file = fopen("test.txt", "r");
-    int count = 0;
-    char line[2056];
-    while (fgets(line, sizeof(line), file) != NULL) {
-        count++;
-    }
-    if (count != 0) {
-        printf("🔴 ftc: ftc name didn't found the Error\n");
-        exit(1);
-    }
-    else {
-        printf("🟢 ftc: ftc name found the Error\n");
-    }
-}
 
 //test si ftc size retourne le bon nombre de fichier
 void testftcsize(){
@@ -122,11 +105,11 @@ void testftcsize(){
     while (fgets(line, sizeof(line), file) != NULL) {
         count++;
     }
-    if (count == 3) {
+    if (count == 2) {
         printf("🟢 ftc: ftc size return %d files\n",count);
     }
     else {
-        printf("🔴 ftc: ftc size return %d files not 3\n",count);
+        printf("🔴 ftc: ftc size return %d files not 2\n",count);
         exit(1);
     }
 }
@@ -232,11 +215,11 @@ void testftcdir(){
     while (fgets(line, sizeof(line), file) != NULL) {
         count++;
     }
-    if (count == 220) {
+    if (count == 222) {
         printf("🟢 ftc: ftc dir return %d files\n",count);
     }
     else {
-        printf("🔴 ftc: ftc dir return %d files not 220\n",count);
+        printf("🔴 ftc: ftc dir return %d files not 222\n",count);
         exit(1);
     }
 }
@@ -362,7 +345,6 @@ int main(int argc,char *argv[ ]) {
     testftcflag();
     testftcname();
     testftcnamefaux();
-    testftcnamefaux2();
     testftcsize();
     testftcsizefaux();
     testftcsizefaux2();

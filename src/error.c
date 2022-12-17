@@ -35,7 +35,7 @@ void checksize(char* size){
             if (size[i] < '0' || size[i] > '9') {            
                 if ((size[i] > 'a' && size[i] < 'z')||(size[i] > 'A' || size[i] < 'Z')) {
                     if (size[i] != 'b' && size[i] != 'k' && size[i] != 'm' && size[i] != 'g') {
-                        printerror("ftc: invalid size (must be (+)XbXkXmXg)");
+                        printerror("ftc: invalid size (must be (+)XcXkXMXG)");
                         exit(1);
                     }
                 }
@@ -44,12 +44,12 @@ void checksize(char* size){
     } else {
         for (int i = 0; i < strlen(size)-1; i++) {
             if (size[i] < '0' || size[i] > '9') {
-                printerror("ftc: invalid size (must be (+)XbXkXmXg)");
+                printerror("ftc: invalid size (must be (+)XcXkXMXG)");
                 exit(1);
             }
         }
         if (size[strlen(size)-1] != 'b' && size[strlen(size)-1] != 'k' && size[strlen(size)-1] != 'm' && size[strlen(size)-1] != 'g') {
-            printerror("ftc: invalid size (must be (+)XbXkXmXg)");
+            printerror("ftc: invalid size (must be (+)XcXkXMXG)");
             exit(1);
         }
     }
@@ -111,10 +111,6 @@ void checkperm(char* perm){
 
 //verifie que le nom du fichier ne contient pas de caractere speciaux ou ne commence pas par un point ou chiffre
 void checkname(char* name){
-    if (name[0] == '.' || name[0] == '0' || name[0] == '1' || name[0] == '2' || name[0] == '3' || name[0] == '4' || name[0] == '5' || name[0] == '6' || name[0] == '7' || name[0] == '8' || name[0] == '9') {
-        printerror("ftc: invalid name for file (start with a letter)");
-        exit(1);
-    }
     for (int i = 0; i < strlen(name); i++) {
         if (name[i] == '[' || name[i] == ']' || name[i] == '{' || name[i] == '}' || name[i] == '|' || name[i] == '\\' || name[i] == '<' || name[i] == '>' || name[i] == '"' || name[i] == '\'' || name[i] == '`' || name[i] == '!' || name[i] == '@' || name[i] == '#' || name[i] == '$' || name[i] == '%' || name[i] == '^' || name[i] == '&' || name[i] == '=' || name[i] == ';' || name[i] == ':' || name[i] == ',' || name[i] == '~') {
             printerror("ftc: invalid name for file (contains special character)");
