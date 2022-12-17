@@ -1,5 +1,5 @@
-ftc: ftc.o listfiles.o size.o name.o util.o date.o
-	gcc ftc.o listfiles.o size.o name.o util.o date.o -o ftc 
+ftc: ftc.o listfiles.o size.o name.o util.o date.o mime.o perm.o
+	gcc ftc.o listfiles.o size.o name.o util.o date.o mime.o perm.o -o ftc 
 
 ftc.o: src/ftc.c
 	gcc -c -Wall src/ftc.c 
@@ -19,4 +19,8 @@ util.o : src/util.c
 date.o : src/date.c
 	gcc -c -Wall src/date.c
 
+mime.o : src/mime.c
+	gcc -c -Wall src/mime.c
 
+perm.o : src/perm.c
+	gcc -c -Wall src/perm.c

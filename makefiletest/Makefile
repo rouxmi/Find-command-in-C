@@ -1,4 +1,4 @@
-FILES_MAIN	=	ftc.c listfiles.c name.c size.c util.c date.c		
+FILES_MAIN	=	ftc.c listfiles.c name.c size.c util.c date.c mime.c perm.c	
 
 
 S_PATH	=	src/

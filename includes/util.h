@@ -5,6 +5,8 @@
 #include "../includes/name.h"
 #include "../includes/size.h"
 #include "../includes/date.h"
+#include "../includes/mime.h"
+#include "../includes/perm.h"
 
 
 
@@ -50,3 +52,7 @@ listfile* flagsize(char* size, listfile* listoffile);
 listfile* flagdate(char* date, listfile* listoffile);
 
 bool is_regular_file(const char *path);
+
+listfile* flagmime(char* mime, listfile* listoffile);
+
+listfile* flagperm(char* perm, listfile* listoffile);

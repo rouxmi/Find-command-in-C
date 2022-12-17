@@ -148,11 +148,13 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
             }else if(strcmp(flagstab.tab[i].flagname,"-date")==0){
                 listfile=flagdate(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
-                //listfile=flagmime(flagstab.tab[i].flagvalue,listfile);
+                listfile=flagmime(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
                 //listfile=flagctc(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
                 //listfile=flagdir(listfile);
+            }else if(strcmp(flagstab.tab[i].flagname,"-perm")==0){
+                listfile=flagperm(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-test")==0){
                 printtabflags(flagstab);
                 exit(1);
@@ -215,6 +217,48 @@ listfile* flagdate(char* date, listfile* listoffile){
     while(listoffile!=NULL){
         if (is_regular_file(listoffile->path)){
             if(testdate(listoffile->path,date)){
+                addfile(listfile2,listoffile->path);
+            }
+        }
+        listoffile=listoffile->next;
+    }
+    deleteListFile(adresselist->next,root);
+    free(adresselist);
+    return listfile2;
+}
+
+//flag -mime
+
+listfile* flagmime(char* mime, listfile* listoffile){
+    char* root=listoffile->path;
+    listfile* adresselist=listoffile;
+    listfile* listfile2 = malloc(sizeof(listfile)*10);
+    listfile2->path=listoffile->path;
+    listfile2->next=NULL;
+    while(listoffile!=NULL){
+        if (is_regular_file(listoffile->path)){
+            if(testmime(listoffile->path,mime)){
+                addfile(listfile2,listoffile->path);
+            }
+        }
+        listoffile=listoffile->next;
+    }
+    deleteListFile(adresselist->next,root);
+    free(adresselist);
+    return listfile2;
+}
+
+//flag -perm
+
+listfile* flagperm(char* perm, listfile* listoffile){
+    char* root=listoffile->path;
+    listfile* adresselist=listoffile;
+    listfile* listfile2 = malloc(sizeof(listfile)*10);
+    listfile2->path=listoffile->path;
+    listfile2->next=NULL;
+    while(listoffile!=NULL){
+        if (is_regular_file(listoffile->path)){
+            if(testperm(listoffile->path,perm)){
                 addfile(listfile2,listoffile->path);
             }
         }
