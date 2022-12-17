@@ -1,6 +1,6 @@
 #include "../includes/util.h"
 
-#define DIR_MODE false
+bool dir_mode=false;
 
 
 bool is_regular_file(const char *path)
@@ -162,6 +162,7 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
             }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
                 //listfile=flagctc(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
+                dir_mode=true;
                 listfile=flagdir(listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-perm")==0){
                 listfile=flagperm(flagstab.tab[i].flagvalue,listfile);
@@ -183,7 +184,7 @@ listfile* flagsize(char* size, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (is_regular_file(listoffile->path)){
+        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
             if(testsize(size,listoffile->path)){
                 addfile(listfile2,listoffile->path);
             }
@@ -204,7 +205,7 @@ listfile* flagname(char* name, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (is_regular_file(listoffile->path)){
+        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
             if(testname(name,listoffile->path)){
                 addfile(listfile2,listoffile->path);
             }
@@ -225,7 +226,7 @@ listfile* flagdate(char* date, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (is_regular_file(listoffile->path)){
+        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
             if(testdate(listoffile->path,date)){
                 addfile(listfile2,listoffile->path);
             }
@@ -246,7 +247,7 @@ listfile* flagmime(char* mime, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (is_regular_file(listoffile->path)){
+        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
             if(testmime(listoffile->path,mime)){
                 addfile(listfile2,listoffile->path);
             }
@@ -267,7 +268,7 @@ listfile* flagperm(char* perm, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (is_regular_file(listoffile->path)){
+        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
             if(testperm(listoffile->path,perm)){
                 addfile(listfile2,listoffile->path);
             }
