@@ -8,7 +8,7 @@ int getperm(char * file)
     return statchmod;
 }
 
-bool testperm(char* perm, char* path){
+bool testperm( char* path,char* perm){
     int permint = atoi(perm);
     int fileperm = getperm(path);
     if (permint == fileperm){
