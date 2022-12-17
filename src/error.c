@@ -51,7 +51,7 @@ void checksize(char* size){
 
 //verifie si la permision est au format : (+)XjXhXm
 void checkdate(char* date){
-    if (strcmp(date,"today")==0 || strcmp(date,"yesterday")==0 || strcmp(date,"this month")==0 || strcmp(date,"this week")==0 || strcmp(date,"this year")==0){
+    if (strcmp(date, "now")==0 || strcmp(date,"today")==0 || strcmp(date,"yesterday")==0 || strcmp(date,"this month")==0 || strcmp(date,"this week")==0 || strcmp(date,"this year")==0){
         return;
     }
     if (getoccurence(date, 'j') > 1 || getoccurence(date, 'h') > 1 || getoccurence(date, 'm') > 1) {
