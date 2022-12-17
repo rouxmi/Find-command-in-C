@@ -110,7 +110,7 @@ void checkname(char* name){
         exit(1);
     }
     for (int i = 0; i < strlen(name); i++) {
-        if (name[i] == '/' || name[i] == '*' || name[i] == '?' || name[i] == '[' || name[i] == ']' || name[i] == '{' || name[i] == '}' || name[i] == '|' || name[i] == '\\' || name[i] == '<' || name[i] == '>' || name[i] == '"' || name[i] == '\'' || name[i] == '`' || name[i] == '!' || name[i] == '@' || name[i] == '#' || name[i] == '$' || name[i] == '%' || name[i] == '^' || name[i] == '&' || name[i] == '(' || name[i] == ')' || name[i] == '-' || name[i] == '+' || name[i] == '=' || name[i] == ';' || name[i] == ':' || name[i] == ',' || name[i] == '.' || name[i] == '~') {
+        if (name[i] == '/' || name[i] == '*' || name[i] == '?' || name[i] == '[' || name[i] == ']' || name[i] == '{' || name[i] == '}' || name[i] == '|' || name[i] == '\\' || name[i] == '<' || name[i] == '>' || name[i] == '"' || name[i] == '\'' || name[i] == '`' || name[i] == '!' || name[i] == '@' || name[i] == '#' || name[i] == '$' || name[i] == '%' || name[i] == '^' || name[i] == '&' || name[i] == '(' || name[i] == ')' || name[i] == '-' || name[i] == '+' || name[i] == '=' || name[i] == ';' || name[i] == ':' || name[i] == ',' || name[i] == '~') {
             printerror("ftc: invalid name for file (contains special character)");
             exit(1);
         }
