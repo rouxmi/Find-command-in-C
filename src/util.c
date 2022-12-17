@@ -32,6 +32,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
         if ( strcmp(mainargv[i], "-name") == 0 ) {
             tab.tab[tab.size].isflag=true;
             tab.tab[tab.size].flagname="-name";
+            checkname(mainargv[i+1]);
             tab.tab[tab.size].flagvalue=mainargv[i+1];
             tab.size++;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
@@ -45,6 +46,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
         } else if ( strcmp(mainargv[i], "-date") == 0 ) {
             tab.tab[tab.size].isflag=true;
             tab.tab[tab.size].flagname="-date";
+            checkdate(mainargv[i+1]);
             tab.tab[tab.size].flagvalue=mainargv[i+1];
             tab.size++;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
@@ -63,6 +65,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
         }else if ( strcmp(mainargv[i], "-perm") == 0 ) {
             tab.tab[tab.size].isflag=true;
             tab.tab[tab.size].flagname="-perm";
+            checkperm(mainargv[i+1]);
             tab.tab[tab.size].flagvalue=mainargv[i+1];
             tab.size++;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
@@ -79,6 +82,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
                 tab.tab[tab.size].flagvalue=NULL;
                 i--;
             } else {
+                checkname(mainargv[i+1]);
                 tab.tab[tab.size].flagvalue=mainargv[i+1];
             }
             tab.size++;
