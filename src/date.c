@@ -1,25 +1,19 @@
 #include "../includes/date.h"
 
 bool testdate(char* file, char* inputDuration){
-    struct stat file_info;
     bool inv = false;
-    int status = stat(file, &file_info);
-    if (status != 0) {
-        printf("Error: %s\n", strerror(errno));
-        exit(1);
-    }
+    int difference = get_last_modification(file);
     char *temps;
-    if (inputDuration[0] != '+'){
+    if (inputDuration[0] != '+' && inputDuration[0] != '-'){
         temps= inputDuration;
     }
     else{
         temps = malloc(strlen(inputDuration));
         strcpy(temps, inputDuration+1);
-        inv = true;
+        if (inputDuration[0] != '-'){
+            inv = true;
+        }
     }
-    time_t modificationDate = file_info.st_mtime;
-    time_t currentDate = time(NULL);
-    time_t difference = currentDate - modificationDate;
     int minutes, hours, days;
     minutes = hours = days = 0;
     sscanf(temps, "%dm%dh%dj", &minutes, &hours, &days);
@@ -28,16 +22,41 @@ bool testdate(char* file, char* inputDuration){
     int duration = days*24*60*60 + hours*60*60 + minutes*60;
     if (!inv){
         if (difference < duration){
-            printf("File %s is older than %d %ld\n", file, duration,difference);
             return true;
         } else {
             return false;
         }
     }else{
-        if (difference < duration){
+        if (difference > duration){
             return false;
         } else {
             return true;
         }
+    }
+}
+
+double get_last_modification(const char *file_path) {
+    struct stat st;
+    char *cp_path;
+
+    cp_path = (char *)malloc(sizeof(char) * (strlen(file_path) + 1));
+    strcpy(cp_path, file_path);
+
+    if (stat(cp_path, &st) == 0)
+    {
+        time_t t = st.st_mtime;
+        time_t now = time(NULL);
+
+        // Free memory
+        free(cp_path);
+
+        return difftime(now, t);
+    }
+    else
+    {
+        // Free memory
+        free(cp_path);
+
+        return -1;
     }
 }

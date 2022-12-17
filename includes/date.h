@@ -9,6 +9,8 @@
 #include <errno.h>
 #include <stdbool.h>
 
+double get_last_modification(const char *path);
+
 bool testdate(char* name, char* inputDuration);
 
 #endif //UNTITLED_DATE_H
