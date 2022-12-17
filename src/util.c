@@ -53,6 +53,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
         } else if ( strcmp(mainargv[i], "-mime") == 0 ) {
             tab.tab[tab.size].isflag=true;
             tab.tab[tab.size].flagname="-mime";
+            checkmimetype(mainargv[i+1]);
             tab.tab[tab.size].flagvalue=mainargv[i+1];
             tab.size++;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));

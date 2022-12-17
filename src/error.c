@@ -31,11 +31,13 @@ void checkflagtab(tabflag tab){
 
 void checksize(char* size){
     if (size[0] == '+' || size[0] == '-') {
-        for (int i = 1; i < strlen(size)-1; i++) {
+        for (int i = 1; i < strlen(size); i++) {
             if (size[i] < '0' || size[i] > '9') {            
                 if ((size[i] > 'a' && size[i] < 'z')||(size[i] > 'A' || size[i] < 'Z')) {
-                    printerror("ftc: invalid size (must be (+)XbXkXmXg)");
-                    exit(1);
+                    if (size[i] != 'b' && size[i] != 'k' && size[i] != 'm' && size[i] != 'g') {
+                        printerror("ftc: invalid size (must be (+)XbXkXmXg)");
+                        exit(1);
+                    }
                 }
             }
         }
@@ -45,6 +47,10 @@ void checksize(char* size){
                 printerror("ftc: invalid size (must be (+)XbXkXmXg)");
                 exit(1);
             }
+        }
+        if (size[strlen(size)-1] != 'b' && size[strlen(size)-1] != 'k' && size[strlen(size)-1] != 'm' && size[strlen(size)-1] != 'g') {
+            printerror("ftc: invalid size (must be (+)XbXkXmXg)");
+            exit(1);
         }
     }
 }
@@ -59,7 +65,7 @@ void checkdate(char* date){
         exit(1);
     }
     if (date[0] == '+' || date[0] == '-') {
-        for (int i = 1; i < strlen(date)-1; i++) {
+        for (int i = 1; i < strlen(date); i++) {
             if (date[i] < '0' || date[i] > '9') {
                 if (date[i] != 'j' && date[i] != 'h' && date[i] != 'm') {
                     printerror("ftc: invalid date (must be (+)XjXhXm)");
@@ -68,7 +74,7 @@ void checkdate(char* date){
             }
         }
     } else {
-        for (int i = 0; i < strlen(date)-1; i++) {
+        for (int i = 0; i < strlen(date); i++) {
             if (date[i] < '0' || date[i] > '9') {
                 if (date[i] != 'j' && date[i] != 'h' && date[i] != 'm') {
                     printerror("ftc: invalid date (must be XjXhXm)");
@@ -115,5 +121,19 @@ void checkname(char* name){
             exit(1);
         }
     }
+}
+
+//verifie que le mimetype est bien au format : type/subtype et qu'il existe
+void checkmimetype(char* mimetype){
+    int i = 0;
+
+    while (Mime_types[i][0] != NULL){
+        if (strstr(Mime_types[i][1], mimetype) != NULL) {
+            return;
+        }
+        i++;
+    }
+    printerror("ftc: invalid mimetype (not found)");
+    exit(1);
 }
 

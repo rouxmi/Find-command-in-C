@@ -20,3 +20,5 @@ int getoccurence(char* str,char c);
 void checkperm(char* perm);
 
 void checkname(char* name);
+
+void checkmimetype(char* mimetype);
