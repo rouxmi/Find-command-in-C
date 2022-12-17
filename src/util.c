@@ -4,6 +4,7 @@ bool dir_mode=false;
 bool threads_mode=false;
 int threads_number=0;
 bool color_mode=false;
+bool link_mode=false;
 
 //fonction qui permet de savoir si un fichier est un répertoire ou un fichier
 
@@ -109,7 +110,15 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
             tab.size++;
             i--;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
-        } else {    
+        }else if ( strcmp(mainargv[i], "-link") == 0 ) {
+            tab.tab[tab.size].isflag=true;
+            tab.tab[tab.size].flagname="-link";
+            tab.tab[tab.size].flagvalue=NULL;
+            link_mode=true;
+            tab.size++;
+            i--;
+            tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
+        }else {    
             printf("Le flag %s n'est pas correct\n", mainargv[i]);
             exit(1);
         }
@@ -135,7 +144,11 @@ void addfile(listfile* listfile,char* path){
     }
     listfile->next=malloc(sizeof(listfile)*2);
     listfile->next->path=malloc(strlen(path)+1);
-    strcpy(listfile->next->path,path);
+    if (link_mode){
+        strcpy(listfile->next->path,linker(path));
+    } else{
+        strcpy(listfile->next->path,path);
+    }
     listfile->next->next=NULL;
 }
 

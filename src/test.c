@@ -67,11 +67,11 @@ void testftcname(){
         count++;
     }
     
-    if (count == 11) {
+    if (count == 12) {
         printf("🟢 ftc: ftc name return %d files\n",count);
     }
     else {
-        printf("🔴 ftc: ftc name return %d files not 11\n",count);
+        printf("🔴 ftc: ftc name return %d files not 12\n",count);
         exit(1);
     }
 }
@@ -215,11 +215,11 @@ void testftcdir(){
     while (fgets(line, sizeof(line), file) != NULL) {
         count++;
     }
-    if (count == 222) {
+    if (count == 223) {
         printf("🟢 ftc: ftc dir return %d files\n",count);
     }
     else {
-        printf("🔴 ftc: ftc dir return %d files not 222\n",count);
+        printf("🔴 ftc: ftc dir return %d files not 223\n",count);
         exit(1);
     }
 }
@@ -327,11 +327,11 @@ void testftcctc(){
     while (fgets(line, sizeof(line), file) != NULL) {
         count++;
     }
-    if (count == 28) {
+    if (count == 29) {
         printf("🟢 ftc: ftc ctc return %d files\n",count);
     }
     else {
-        printf("🔴 ftc: ftc ctc return %d files not 28\n",count);
+        printf("🔴 ftc: ftc ctc return %d files not 29\n",count);
         exit(1);
     }
 }

@@ -9,6 +9,7 @@
 #include "../includes/mime.h"
 #include "../includes/perm.h"
 #include "../includes/cat.h"
+#include "../includes/link.h"
 
 
 
