@@ -1,7 +1,11 @@
 #include "../includes/util.h"
 
 bool dir_mode=false;
+bool threads_mode=false;
+int threads_number=0;
+bool color_mode=false;
 
+//fonction qui permet de savoir si un fichier est un répertoire ou un fichier
 
 bool is_regular_file(const char *path)
 {
@@ -16,6 +20,8 @@ bool is_directory(const char *path)
     stat(path, &path_stat);
     return S_ISDIR(path_stat.st_mode)==1;
 }
+
+//fonction qui permet de gérer les flags
 
 
 tabflag getflag(int mainargc,char *mainargv[ ]){
@@ -83,6 +89,14 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
             tab.size++;
             i--;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
+        }else if ( strcmp(mainargv[i], "-color") == 0 ) {
+            tab.tab[tab.size].isflag=true;
+            tab.tab[tab.size].flagname="-color";
+            tab.tab[tab.size].flagvalue=NULL;
+            color_mode=true;
+            tab.size++;
+            i--;
+            tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
         } else {    
             printf("Le flag %s n'est pas correct\n", mainargv[i]);
             exit(1);
@@ -99,6 +113,8 @@ void printtabflags(tabflag flagstab){
         }
     }
 }
+
+//fonction qui permet de gérer listfile
 
 
 void addfile(listfile* listfile,char* path){
@@ -123,7 +139,15 @@ listfile* getlastfile(listfile* listfile){
 void printlistfile(listfile* listfile){
     while(listfile!=NULL){
         if (strcmp(listfile->path,"end")!=0){
-            printf("%s\n",listfile->path);
+            if(color_mode){
+                if (is_directory(listfile->path)){
+                    printf("\x1b[31m%s/\x1b[36m%s\n",dirname(listfile->path),basename(listfile->path));
+                } else {
+                    printf("\x1b[31m%s/\x1b[32m%s\n",dirname(listfile->path),basename(listfile->path));
+                }
+            } else {
+                printf("%s\n",listfile->path);
+            }
         }
         listfile=listfile->next;
     }
@@ -140,8 +164,7 @@ listfile* initializeListFile(char* root){
 
 void deleteListFile(listfile* listfile, char* root){
     if(listfile->next!=NULL){
-        deleteListFile(listfile->next,root);
-        
+        deleteListFile(listfile->next,root); 
     }
     if (strcmp(listfile->path,"end")!=0){
         free(listfile->path);
@@ -150,6 +173,8 @@ void deleteListFile(listfile* listfile, char* root){
     
     
 }
+
+//Appel des différentes fonctions en fonction des flags
 
 //call the function depending on the flag
 listfile* callflag(tabflag flagstab, listfile* listfile){
@@ -160,6 +185,7 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
             }else if(strcmp(flagstab.tab[i].flagname,"-size")==0){
                 listfile=flagsize(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-date")==0){
+                printtabflags(flagstab);
                 listfile=flagdate(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
                 listfile=flagmime(flagstab.tab[i].flagvalue,listfile);
