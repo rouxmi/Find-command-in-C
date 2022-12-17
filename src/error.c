@@ -34,7 +34,7 @@ void checksize(char* size){
         for (int i = 1; i < strlen(size); i++) {
             if (size[i] < '0' || size[i] > '9') {            
                 if ((size[i] > 'a' && size[i] < 'z')||(size[i] > 'A' || size[i] < 'Z')) {
-                    if (size[i] != 'b' && size[i] != 'k' && size[i] != 'm' && size[i] != 'g') {
+                    if (size[i] != 'c' && size[i] != 'k' && size[i] != 'M' && size[i] != 'G') {
                         printerror("ftc: invalid size (must be (+)XcXkXMXG)");
                         exit(1);
                     }
@@ -48,7 +48,7 @@ void checksize(char* size){
                 exit(1);
             }
         }
-        if (size[strlen(size)-1] != 'b' && size[strlen(size)-1] != 'k' && size[strlen(size)-1] != 'm' && size[strlen(size)-1] != 'g') {
+        if (size[strlen(size)-1] != 'c' && size[strlen(size)-1] != 'k' && size[strlen(size)-1] != 'M' && size[strlen(size)-1] != 'G') {
             printerror("ftc: invalid size (must be (+)XcXkXMXG)");
             exit(1);
         }
