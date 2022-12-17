@@ -78,12 +78,18 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
         }else if ( strcmp(mainargv[i], "-dir" ) == 0 ) {
             tab.tab[tab.size].isflag=true;
             tab.tab[tab.size].flagname="-dir";
-            if (mainargv[i+1][0] == '-'){
+            if (i+1<mainargc)
+            {
+                if (mainargv[i+1][0] == '-'){
+                    tab.tab[tab.size].flagvalue=NULL;
+                    i--;
+                }else {
+                    checkname(mainargv[i+1]);
+                    tab.tab[tab.size].flagvalue=mainargv[i+1];
+                }
+            }
+            else {
                 tab.tab[tab.size].flagvalue=NULL;
-                i--;
-            } else {
-                checkname(mainargv[i+1]);
-                tab.tab[tab.size].flagvalue=mainargv[i+1];
             }
             tab.size++;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
@@ -327,7 +333,7 @@ listfile* flagdir(listfile* listoffile,char* name){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (name == NULL){
+        if(name == NULL){
             if (is_directory(listoffile->path)){
                 addfile(listfile2,listoffile->path);
             }
