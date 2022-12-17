@@ -38,6 +38,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
         } else if ( strcmp(mainargv[i], "-size") == 0 ) {
             tab.tab[tab.size].isflag=true;
             tab.tab[tab.size].flagname="-size";
+            checksize(mainargv[i+1]);
             tab.tab[tab.size].flagvalue=mainargv[i+1];
             tab.size++;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
@@ -141,9 +142,9 @@ void printlistfile(listfile* listfile){
         if (strcmp(listfile->path,"end")!=0){
             if(color_mode){
                 if (is_directory(listfile->path)){
-                    printf("\x1b[31m%s/\x1b[36m%s\n",dirname(listfile->path),basename(listfile->path));
+                    printf("\x1b[33m%s/\x1b[36m%s\n",dirname(listfile->path),basename(listfile->path));
                 } else {
-                    printf("\x1b[31m%s/\x1b[32m%s\n",dirname(listfile->path),basename(listfile->path));
+                    printf("\x1b[33m%s/\x1b[32m%s\n",dirname(listfile->path),basename(listfile->path));
                 }
             } else {
                 printf("%s\n",listfile->path);
@@ -185,7 +186,6 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
             }else if(strcmp(flagstab.tab[i].flagname,"-size")==0){
                 listfile=flagsize(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-date")==0){
-                printtabflags(flagstab);
                 listfile=flagdate(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
                 listfile=flagmime(flagstab.tab[i].flagvalue,listfile);
