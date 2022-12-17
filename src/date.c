@@ -4,21 +4,31 @@ bool testdate(char* file, char* inputDuration){
     bool inv = false;
     int difference = get_last_modification(file);
     char *temps;
-    if (inputDuration[0] != '+' && inputDuration[0] != '-'){
-        temps= inputDuration;
-    }
-    else{
+    if (inputDuration[0] == '+') {
         temps = malloc(strlen(inputDuration));
         strcpy(temps, inputDuration+1);
-        if (inputDuration[0] != '-'){
-            inv = true;
+        inv = true;
+    } else if (inputDuration[0] == '-') {
+        temps = malloc(strlen(inputDuration));
+        strcpy(temps, inputDuration+1);
+    } else {
+        temps = malloc(strlen(inputDuration));
+        strcpy(temps, inputDuration);
+    }
+
+    int days = 0, hours = 0, minutes = 0;
+    for (int i = 0; i < strlen(temps); i++) {
+        if (temps[i] == 'j') {
+            sscanf(temps, "%dj", &days);
+        } else if (temps[i] == 'h') {
+            sscanf(temps, "%dh", &hours);
+        } else if (temps[i] == 'm') {
+            sscanf(temps, "%dm", &minutes);
         }
     }
-    int minutes, hours, days;
-    minutes = hours = days = 0;
-    sscanf(temps, "%dm%dh%dj", &minutes, &hours, &days);
+
     free(temps);
-    printf("days: %d, hours: %d, minutes: %d \n", days, hours, minutes);
+//    printf("days: %d, hours: %d, minutes: %d \n", days, hours, minutes);
     int duration = days*24*60*60 + hours*60*60 + minutes*60;
     if (!inv){
         if (difference < duration){
