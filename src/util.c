@@ -1,5 +1,7 @@
 #include "../includes/util.h"
 
+#define DIR_MODE false
+
 
 bool is_regular_file(const char *path)
 {
