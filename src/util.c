@@ -323,7 +323,7 @@ listfile* flagctc(char* name, listfile* listoffile){
     listfile2->next=NULL;
     while(listoffile!=NULL){
         if (is_regular_file(listoffile->path)){
-            if(testctc(name,listoffile->path)){
+            if(testctc(listoffile->path,name)){
                 addfile(listfile2,listoffile->path);
             }
         }

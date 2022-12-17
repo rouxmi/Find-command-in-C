@@ -10,17 +10,25 @@ bool testctc(char* file_path,char* str) {
   }
 
   // Read the file line by line
-  char line[1024];
+  char line[4096];
   while (fgets(line, sizeof(line), file) != NULL) {
-    // Check if the string is present in the current line
-    if (strstr(line, str) != NULL) {
-      // Close the file and return 1 if the string is found
-      fclose(file);
-      return true;
+    if (strstr(line, str) != NULL){
+        fclose(file);
+        return true;
+    }
+    else{
+        regex_t regex;
+        int return_value = regcomp(&regex,str,0);
+        return_value = regexec(&regex, line, 0, NULL, 0);
+        regfree(&regex);
+        if(return_value == 0){
+            fclose(file);
+            return true;
+        }
     }
   }
 
-  // Close the file and return 0 if the string is not found
+
   fclose(file);
   return false;
 }
