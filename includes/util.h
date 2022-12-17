@@ -8,6 +8,7 @@
 #include "../includes/date.h"
 #include "../includes/mime.h"
 #include "../includes/perm.h"
+#include "../includes/cat.h"
 
 
 
@@ -59,3 +60,5 @@ listfile* flagmime(char* mime, listfile* listoffile);
 listfile* flagperm(char* perm, listfile* listoffile);
 
 listfile* flagdir(listfile* listoffile, char* name);
+
+listfile* flagctc(char* name, listfile* listoffile);

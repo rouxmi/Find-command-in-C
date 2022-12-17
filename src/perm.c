@@ -13,7 +13,7 @@ char* getperm(char * file)
 
 bool testperm( char* path,char* perm){
     char* fileperm = getperm(path);
-    if (strcmp(perm,fileperm) == 0){
+    if (atoi(perm)==atoi(fileperm)){
         return true;
     }
     return false;

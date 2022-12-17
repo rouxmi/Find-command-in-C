@@ -164,7 +164,7 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
             }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
                 listfile=flagmime(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
-                //listfile=flagctc(flagstab.tab[i].flagvalue,listfile);
+                listfile=flagctc(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
                 dir_mode=true;
                 if (flagstab.tab[i].flagvalue!=NULL){
@@ -304,6 +304,28 @@ listfile* flagdir(listfile* listoffile,char* name){
         }else{if (is_directory(listoffile->path) && strcmp(basename(listoffile->path),name)==0){
             addfile(listfile2,listoffile->path);
         }
+        }
+        listoffile=listoffile->next;
+    }
+    deleteListFile(adresselist->next,root);
+    free(adresselist);
+    return listfile2;
+}
+
+
+//flag -ctc
+
+listfile* flagctc(char* name, listfile* listoffile){
+    char* root=listoffile->path;
+    listfile* adresselist=listoffile;
+    listfile* listfile2 = malloc(sizeof(listfile)*10);
+    listfile2->path=listoffile->path;
+    listfile2->next=NULL;
+    while(listoffile!=NULL){
+        if (is_regular_file(listoffile->path)){
+            if(testctc(name,listoffile->path)){
+                addfile(listfile2,listoffile->path);
+            }
         }
         listoffile=listoffile->next;
     }
