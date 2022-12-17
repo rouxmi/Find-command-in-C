@@ -6,14 +6,28 @@ bool testmime( char* path, char* mime){
     if (file == NULL){
         return false;
     }
-    if (strcmp(mime,file) ==0){
-        
-        free(file);
-        return true;
-    }
-    else{
-        free(file);
-        return false;
+    if(strstr("/",mime)){
+        if (strcmp(mime,file) ==0){
+            free(file);
+            return true;
+        }
+        else{
+
+            free(file);
+            return false;
+        }
+    }else{
+        const char deli[] = "/";   
+        char *token= strtok(file, deli); 
+
+        if(strcmp(token,mime)==0){
+            free(file);
+            return true;
+        }
+        else{
+            free(file);
+            return false;
+        }
     }
 }
 
