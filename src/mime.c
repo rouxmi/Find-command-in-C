@@ -6,7 +6,7 @@ bool testmime( char* path, char* mime){
     if (file == NULL){
         return false;
     }
-    if(strstr("/",mime)){
+    if(strchr(mime,'/')!=NULL){
         if (strcmp(mime,file) ==0){
             free(file);
             return true;
