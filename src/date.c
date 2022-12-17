@@ -4,6 +4,25 @@ bool testdate(char* file, char* inputDuration){
     bool inv = false;
     int difference = get_last_modification(file);
     char *temps;
+    if (strcmp(inputDuration, "now") == 0) {
+        temps = malloc(strlen("0m")+1);
+        strcpy(temps, "0m");
+    } else if (strcmp(inputDuration, "today") == 0) {
+        temps = malloc(strlen("1j")+1);
+        strcpy(temps, "1j");
+    } else if (strcmp(inputDuration, "yesterday") == 0) {
+        temps = malloc(strlen("2j")+1);
+        strcpy(temps, "2j");
+    } else if (strcmp(inputDuration, "this week") == 0) {
+        temps = malloc(strlen("7j")+1);
+        strcpy(temps, "7j");
+    } else if (strcmp(inputDuration, "this month") == 0) {
+        temps = malloc(strlen("30j")+1);
+        strcpy(temps, "30j");
+    } else if (strcmp(inputDuration, "this year") == 0) {
+        temps = malloc(strlen("365j")+1);
+        strcpy(temps, "365j");
+    } else
     if (inputDuration[0] == '+') {
         temps = malloc(strlen(inputDuration));
         strcpy(temps, inputDuration+1);
@@ -38,9 +57,9 @@ bool testdate(char* file, char* inputDuration){
         }
     }else{
         if (difference > duration){
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 }
