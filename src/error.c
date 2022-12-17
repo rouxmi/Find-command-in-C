@@ -112,7 +112,7 @@ void checkperm(char* perm){
 //verifie que le nom du fichier ne contient pas de caractere speciaux ou ne commence pas par un point ou chiffre
 void checkname(char* name){
     for (int i = 0; i < strlen(name); i++) {
-        if (name[i] == '[' || name[i] == ']' || name[i] == '{' || name[i] == '}' || name[i] == '|' || name[i] == '\\' || name[i] == '<' || name[i] == '>' || name[i] == '"' || name[i] == '\'' || name[i] == '`' || name[i] == '!' || name[i] == '@' || name[i] == '#' || name[i] == '$' || name[i] == '%' || name[i] == '^' || name[i] == '&' || name[i] == '=' || name[i] == ';' || name[i] == ':' || name[i] == ',' || name[i] == '~') {
+        if (name[i] == '{' || name[i] == '}' || name[i] == '|' || name[i] == '\\' || name[i] == '<' || name[i] == '>' || name[i] == '"' || name[i] == '\'' || name[i] == '`' || name[i] == '!' || name[i] == '@' || name[i] == '#' || name[i] == '$' || name[i] == '%'  || name[i] == '&' || name[i] == '=' || name[i] == ';' || name[i] == ':' || name[i] == ',' || name[i] == '~') {
             printerror("ftc: invalid name for file (contains special character)");
             exit(1);
         }
