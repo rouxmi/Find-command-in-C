@@ -56,3 +56,5 @@ bool is_regular_file(const char *path);
 listfile* flagmime(char* mime, listfile* listoffile);
 
 listfile* flagperm(char* perm, listfile* listoffile);
+
+listfile* flagdir(listfile* listoffile);

@@ -8,6 +8,14 @@ bool is_regular_file(const char *path)
     return S_ISREG(path_stat.st_mode)==1;
 }
 
+bool is_directory(const char *path)
+{
+    struct stat path_stat;
+    stat(path, &path_stat);
+    return S_ISDIR(path_stat.st_mode)==1;
+}
+
+
 tabflag getflag(int mainargc,char *mainargv[ ]){
     tabflag tab;
     tab.size=0;
@@ -152,7 +160,7 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
             }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
                 //listfile=flagctc(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
-                //listfile=flagdir(listfile);
+                listfile=flagdir(listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-perm")==0){
                 listfile=flagperm(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-test")==0){
@@ -261,6 +269,25 @@ listfile* flagperm(char* perm, listfile* listoffile){
             if(testperm(listoffile->path,perm)){
                 addfile(listfile2,listoffile->path);
             }
+        }
+        listoffile=listoffile->next;
+    }
+    deleteListFile(adresselist->next,root);
+    free(adresselist);
+    return listfile2;
+}
+
+//flag -dir
+
+listfile* flagdir(listfile* listoffile){
+    char* root=listoffile->path;
+    listfile* adresselist=listoffile;
+    listfile* listfile2 = malloc(sizeof(listfile)*10);
+    listfile2->path=listoffile->path;
+    listfile2->next=NULL;
+    while(listoffile!=NULL){
+        if (is_directory(listoffile->path)){
+            addfile(listfile2,listoffile->path);
         }
         listoffile=listoffile->next;
     }
