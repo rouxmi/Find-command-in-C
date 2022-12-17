@@ -30,3 +30,9 @@ cat.o : src/cat.c
 
 error.o : src/error.c
 	gcc -c -Wall src/error.c
+
+test.o : src/test.c
+	gcc -c -Wall src/test.c
+
+test: test.o listfiles.o size.o name.o util.o date.o mime.o perm.o cat.o error.o
+	gcc listfiles.o size.o name.o util.o date.o mime.o perm.o cat.o error.o test.o -o test

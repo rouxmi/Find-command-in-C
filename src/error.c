@@ -97,7 +97,7 @@ void checkperm(char* perm){
     }
     for (int i = 0; i < strlen(perm); i++) {
         if (perm[i] < '0' || perm[i] > '7') {
-            printerror("ftc: invalid permission (must be octal)");
+            printerror("ftc: invalid permission (must be format octal)");
             exit(1);
         }
     }
@@ -110,7 +110,7 @@ void checkname(char* name){
         exit(1);
     }
     for (int i = 0; i < strlen(name); i++) {
-        if (name[i] == '/' || name[i] == '*' || name[i] == '?' || name[i] == '[' || name[i] == ']' || name[i] == '{' || name[i] == '}' || name[i] == '|' || name[i] == '\\' || name[i] == '<' || name[i] == '>' || name[i] == '"' || name[i] == '\'' || name[i] == '`' || name[i] == '!' || name[i] == '@' || name[i] == '#' || name[i] == '$' || name[i] == '%' || name[i] == '^' || name[i] == '&' || name[i] == '(' || name[i] == ')' || name[i] == '-' || name[i] == '+' || name[i] == '=' || name[i] == ';' || name[i] == ':' || name[i] == ',' || name[i] == '~') {
+        if (name[i] == '[' || name[i] == ']' || name[i] == '{' || name[i] == '}' || name[i] == '|' || name[i] == '\\' || name[i] == '<' || name[i] == '>' || name[i] == '"' || name[i] == '\'' || name[i] == '`' || name[i] == '!' || name[i] == '@' || name[i] == '#' || name[i] == '$' || name[i] == '%' || name[i] == '^' || name[i] == '&' || name[i] == '=' || name[i] == ';' || name[i] == ':' || name[i] == ',' || name[i] == '~') {
             printerror("ftc: invalid name for file (contains special character)");
             exit(1);
         }
