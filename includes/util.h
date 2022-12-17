@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <libgen.h>
 #include "../includes/name.h"
 #include "../includes/size.h"
 #include "../includes/date.h"
@@ -57,4 +58,4 @@ listfile* flagmime(char* mime, listfile* listoffile);
 
 listfile* flagperm(char* perm, listfile* listoffile);
 
-listfile* flagdir(listfile* listoffile);
+listfile* flagdir(listfile* listoffile, char* name);

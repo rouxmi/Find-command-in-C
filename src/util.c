@@ -68,9 +68,13 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
         }else if ( strcmp(mainargv[i], "-dir" ) == 0 ) {
             tab.tab[tab.size].isflag=true;
             tab.tab[tab.size].flagname="-dir";
-            tab.tab[tab.size].flagvalue=NULL;
+            if (mainargv[i+1][0] == '-'){
+                tab.tab[tab.size].flagvalue=NULL;
+                i--;
+            } else {
+                tab.tab[tab.size].flagvalue=mainargv[i+1];
+            }
             tab.size++;
-            i--;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
         } else if ( strcmp(mainargv[i], "-test") == 0 ) {
             tab.tab[tab.size].isflag=true;
@@ -163,7 +167,11 @@ listfile* callflag(tabflag flagstab, listfile* listfile){
                 //listfile=flagctc(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
                 dir_mode=true;
-                listfile=flagdir(listfile);
+                if (flagstab.tab[i].flagvalue!=NULL){
+                    listfile=flagdir(listfile,flagstab.tab[i].flagvalue);
+                }else{
+                    listfile=flagdir(listfile,NULL);
+                }
             }else if(strcmp(flagstab.tab[i].flagname,"-perm")==0){
                 listfile=flagperm(flagstab.tab[i].flagvalue,listfile);
             }else if(strcmp(flagstab.tab[i].flagname,"-test")==0){
@@ -282,15 +290,20 @@ listfile* flagperm(char* perm, listfile* listoffile){
 
 //flag -dir
 
-listfile* flagdir(listfile* listoffile){
+listfile* flagdir(listfile* listoffile,char* name){
     char* root=listoffile->path;
     listfile* adresselist=listoffile;
     listfile* listfile2 = malloc(sizeof(listfile)*10);
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (is_directory(listoffile->path)){
+        if (name == NULL){
+            if (is_directory(listoffile->path)){
+                addfile(listfile2,listoffile->path);
+            }
+        }else{if (is_directory(listoffile->path) && strcmp(basename(listoffile->path),name)==0){
             addfile(listfile2,listoffile->path);
+        }
         }
         listoffile=listoffile->next;
     }
