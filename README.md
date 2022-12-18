@@ -10,12 +10,19 @@ Pour lancer l'application, il faut d'avord compiler l'application avec la comman
 ```shell
 $ make
 ```
-ou alors, si l'on a déjà compilé une fois le fichier :
-```shell
-$ make re
-```
 
 Pour lancer l'application, il suffit ensuite d'écrire :
 ```shell
 $ ./fct starting-point [-option [parametre]]
 ```
+
+Et si l'on veut lancer les tests, il suffit d'écrire après avoir compiler l'application:
+```shell
+$ make test
+$ ./test
+```
+
+L'utilisation des différents flags est donnée dans le sujet ou dans le rapport disponible sur gitlab.
+
+## Attention :
+Les tests dépendent du répertoire courant. 

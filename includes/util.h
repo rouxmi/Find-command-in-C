@@ -40,6 +40,8 @@ void printlistfile(listfile* listfile);
 
 void addfile(listfile* listfile,char* path);
 
+bool isfileinlist(listfile* listfile,char* path);
+
 listfile* getlastfile(listfile* listfile);
 
 listfile* initializeListFile(char* root);

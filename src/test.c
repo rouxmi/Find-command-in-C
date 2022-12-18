@@ -215,11 +215,11 @@ void testftcdir(){
     while (fgets(line, sizeof(line), file) != NULL) {
         count++;
     }
-    if (count == 223) {
+    if (count >= 225) {
         printf("🟢 ftc: ftc dir return %d files\n",count);
     }
     else {
-        printf("🔴 ftc: ftc dir return %d files not 223\n",count);
+        printf("🔴 ftc: ftc dir return %d files not more than 225\n",count);
         exit(1);
     }
 }

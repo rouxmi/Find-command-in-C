@@ -5,6 +5,7 @@ bool threads_mode=false;
 int threads_number=0;
 bool color_mode=false;
 bool link_mode=false;
+bool or_mode=false;
 
 //fonction qui permet de savoir si un fichier est un répertoire ou un fichier
 
@@ -118,6 +119,14 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
             tab.size++;
             i--;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
+        }else if ( strcmp(mainargv[i], "-ou") == 0 ) {
+            tab.tab[tab.size].isflag=true;
+            tab.tab[tab.size].flagname="-ou";
+            tab.tab[tab.size].flagvalue=NULL;
+            or_mode=true;
+            tab.size++;
+            i--;
+            tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
         }else {    
             printf("Le flag %s n'est pas correct\n", mainargv[i]);
             exit(1);
@@ -159,6 +168,17 @@ listfile* getlastfile(listfile* listfile){
     }
     return listfile;
 }
+
+//fonction de savoir si un fichier est déjà dans la liste
+bool isfileinlist(listfile* listfile,char* Path){
+    while(listfile!=NULL){
+        if (strcmp(listfile->path,Path)==0){
+            return true;
+        }
+        listfile=listfile->next;
+    }
+    return false;
+} 
 
 
 void printlistfile(listfile* listfile){
@@ -202,35 +222,83 @@ void deleteListFile(listfile* listfile, char* root){
 //Appel des différentes fonctions en fonction des flags
 
 //call the function depending on the flag
-listfile* callflag(tabflag flagstab, listfile* listfile){
-    for(int i=0; i<flagstab.size;i++){
-        if(flagstab.tab[i].isflag){
-            if(strcmp(flagstab.tab[i].flagname,"-name")==0){
-                listfile=flagname(flagstab.tab[i].flagvalue,listfile);
-            }else if(strcmp(flagstab.tab[i].flagname,"-size")==0){
-                listfile=flagsize(flagstab.tab[i].flagvalue,listfile);
-            }else if(strcmp(flagstab.tab[i].flagname,"-date")==0){
-                listfile=flagdate(flagstab.tab[i].flagvalue,listfile);
-            }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
-                listfile=flagmime(flagstab.tab[i].flagvalue,listfile);
-            }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
-                listfile=flagctc(flagstab.tab[i].flagvalue,listfile);
-            }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
-                dir_mode=true;
-                if (flagstab.tab[i].flagvalue!=NULL){
-                    listfile=flagdir(listfile,flagstab.tab[i].flagvalue);
-                }else{
-                    listfile=flagdir(listfile,NULL);
+listfile* callflag(tabflag flagstab, listfile* Listfile){
+    if (!or_mode){
+        //si on est en mode and
+        for(int i=0; i<flagstab.size;i++){
+            if(flagstab.tab[i].isflag){
+                if(strcmp(flagstab.tab[i].flagname,"-name")==0){
+                    Listfile=flagname(flagstab.tab[i].flagvalue,Listfile);
+                }else if(strcmp(flagstab.tab[i].flagname,"-size")==0){
+                    Listfile=flagsize(flagstab.tab[i].flagvalue,Listfile);
+                }else if(strcmp(flagstab.tab[i].flagname,"-date")==0){
+                    Listfile=flagdate(flagstab.tab[i].flagvalue,Listfile);
+                }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
+                    Listfile=flagmime(flagstab.tab[i].flagvalue,Listfile);
+                }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
+                    Listfile=flagctc(flagstab.tab[i].flagvalue,Listfile);
+                }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
+                    dir_mode=true;
+                    if (flagstab.tab[i].flagvalue!=NULL){
+                        Listfile=flagdir(Listfile,flagstab.tab[i].flagvalue);
+                    }else{
+                        Listfile=flagdir(Listfile,NULL);
+                    }
+                }else if(strcmp(flagstab.tab[i].flagname,"-perm")==0){
+                    Listfile=flagperm(flagstab.tab[i].flagvalue,Listfile);
+                }else if(strcmp(flagstab.tab[i].flagname,"-test")==0){
+                    printtabflags(flagstab);
+                    exit(1);
                 }
-            }else if(strcmp(flagstab.tab[i].flagname,"-perm")==0){
-                listfile=flagperm(flagstab.tab[i].flagvalue,listfile);
-            }else if(strcmp(flagstab.tab[i].flagname,"-test")==0){
-                printtabflags(flagstab);
-                exit(1);
             }
         }
+        return Listfile;
+    }else{
+        
+        //si on est en mode or entre les flags
+        listfile* listfile2 = malloc(sizeof(Listfile)*10);
+        listfile2->path=Listfile->path;
+        listfile2->next=NULL;
+        listfile* adresselist = Listfile;
+        for(int i=0; i<flagstab.size;i++){
+
+            if(flagstab.tab[i].isflag){
+                if(strcmp(flagstab.tab[i].flagname,"-name")==0){
+                    Listfile=flagname(flagstab.tab[i].flagvalue,adresselist);
+                }else if(strcmp(flagstab.tab[i].flagname,"-size")==0){
+                    Listfile=flagsize(flagstab.tab[i].flagvalue,adresselist);
+                }else if(strcmp(flagstab.tab[i].flagname,"-date")==0){
+                    Listfile=flagdate(flagstab.tab[i].flagvalue,adresselist);
+                }else if(strcmp(flagstab.tab[i].flagname,"-mime")==0){
+                    Listfile=flagmime(flagstab.tab[i].flagvalue,adresselist);
+                }else if(strcmp(flagstab.tab[i].flagname,"-ctc")==0){
+                    Listfile=flagctc(flagstab.tab[i].flagvalue,adresselist);
+                }else if(strcmp(flagstab.tab[i].flagname,"-dir")==0){
+                    dir_mode=true;
+                    if (flagstab.tab[i].flagvalue!=NULL){
+                        Listfile=flagdir(adresselist,flagstab.tab[i].flagvalue);
+                    }else{
+                        Listfile=flagdir(adresselist,NULL);
+                    }
+                }else if(strcmp(flagstab.tab[i].flagname,"-perm")==0){
+                    Listfile=flagperm(flagstab.tab[i].flagvalue,adresselist);
+                }else if(strcmp(flagstab.tab[i].flagname,"-test")==0){
+                    printtabflags(flagstab);
+                    exit(1);
+                }
+                while(Listfile->next!=NULL){
+                    if (!isfileinlist(listfile2,Listfile->next->path)){
+                        addfile(listfile2,Listfile->next->path);
+                        
+                    }
+                    Listfile=Listfile->next;
+                }
+                
+            }
+        }
+        
+        return listfile2;
     }
-    return listfile;
 }
 
 //flag -size
@@ -249,8 +317,11 @@ listfile* flagsize(char* size, listfile* listoffile){
         }
         listoffile=listoffile->next;
     }
-    deleteListFile(adresselist->next,root);
-    free(adresselist);
+    if(!or_mode){
+        
+        deleteListFile(adresselist->next,root);
+        free(adresselist);
+    }
     return listfile2;
 }
 
@@ -270,8 +341,10 @@ listfile* flagname(char* name, listfile* listoffile){
         }
         listoffile=listoffile->next;
     }
-    deleteListFile(adresselist->next,root);
-    free(adresselist);
+    if(!or_mode){
+        deleteListFile(adresselist->next,root);
+        free(adresselist);
+    }
     return listfile2;
 }
 
@@ -291,8 +364,11 @@ listfile* flagdate(char* date, listfile* listoffile){
         }
         listoffile=listoffile->next;
     }
-    deleteListFile(adresselist->next,root);
-    free(adresselist);
+    if(!or_mode){
+        
+        deleteListFile(adresselist->next,root);
+        free(adresselist);
+    }
     return listfile2;
 }
 
@@ -312,8 +388,11 @@ listfile* flagmime(char* mime, listfile* listoffile){
         }
         listoffile=listoffile->next;
     }
-    deleteListFile(adresselist->next,root);
-    free(adresselist);
+    if(!or_mode){
+        
+        deleteListFile(adresselist->next,root);
+        free(adresselist);
+    }
     return listfile2;
 }
 
@@ -333,8 +412,11 @@ listfile* flagperm(char* perm, listfile* listoffile){
         }
         listoffile=listoffile->next;
     }
-    deleteListFile(adresselist->next,root);
-    free(adresselist);
+    if(!or_mode){
+        
+        deleteListFile(adresselist->next,root);
+        free(adresselist);
+    }
     return listfile2;
 }
 
@@ -357,8 +439,11 @@ listfile* flagdir(listfile* listoffile,char* name){
         }
         listoffile=listoffile->next;
     }
-    deleteListFile(adresselist->next,root);
-    free(adresselist);
+    if(!or_mode){
+        
+        deleteListFile(adresselist->next,root);
+        free(adresselist);
+    }
     return listfile2;
 }
 
@@ -379,7 +464,10 @@ listfile* flagctc(char* name, listfile* listoffile){
         }
         listoffile=listoffile->next;
     }
-    deleteListFile(adresselist->next,root);
-    free(adresselist);
+    if(!or_mode){
+        
+        deleteListFile(adresselist->next,root);
+        free(adresselist);
+    }
     return listfile2;
 }
