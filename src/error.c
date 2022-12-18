@@ -20,7 +20,7 @@ void checkflagtab(tabflag tab){
             printerror(error);
         }
         if (tab.tab[i].flagvalue==NULL){
-            if (strcmp(tab.tab[i].flagname,"-dir")!=0 && strcmp(tab.tab[i].flagname,"-color")!=0 && strcmp(tab.tab[i].flagname,"-test")!=0){
+            if (strcmp(tab.tab[i].flagname,"-dir")!=0 && strcmp(tab.tab[i].flagname,"-color")!=0 && strcmp(tab.tab[i].flagname,"-test")!=0  && strcmp(tab.tab[i].flagname,"-link")!=0  && strcmp(tab.tab[i].flagname,"-ou")!=0){
                 char* error=NULL;
                 sprintf(error,"ftc: flag value required for flag:%s",tab.tab[i].flagname);
                 printerror(error);
@@ -118,6 +118,7 @@ void checkname(char* name){
         }
     }
 }
+
 
 //verifie que le mimetype est bien au format : type/subtype et qu'il existe
 void checkmimetype(char* mimetype){
