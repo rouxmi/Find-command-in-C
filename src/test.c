@@ -105,11 +105,11 @@ void testftcsize(){
     while (fgets(line, sizeof(line), file) != NULL) {
         count++;
     }
-    if (count == 2) {
+    if (count == 3) {
         printf("🟢 ftc: ftc size return %d files\n",count);
     }
     else {
-        printf("🔴 ftc: ftc size return %d files not 2\n",count);
+        printf("🔴 ftc: ftc size return %d files not 3\n",count);
         exit(1);
     }
 }
@@ -336,6 +336,45 @@ void testftcctc(){
     }
 }
 
+//test non ascii ctc ne fonctionne pas (il ne trouve pas le fichier)
+//à cause de l'encodage du fichier C qui n'est pas en UTF-8
+void testftcctcnonascii(){
+    printf("test ftc ctc non ascii:\n");
+    system("./ftc ./ -ctc Ñ >test.txt");
+    FILE* file = fopen("test.txt", "r");
+    int count = 0;
+    char line[2056];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        count++;
+    }
+    if (count != 0) {
+        printf("🔴 ftc: ftc ctc didn't found the non asciir\n");
+        exit(1);
+    }
+    else {
+        printf("🟢 ftc: ftc ctc found the non ascii\n");
+    }
+}
+
+//test ftc ou
+void testftcou(){
+    printf("test ftc ou:\n");
+    system("./ftc ./ -name *.c -name *.h -ou >test.txt");
+    FILE* file = fopen("test.txt", "r");
+    int count = 0;
+    char line[2056];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        count++;
+    }
+    if (count >= 2) {
+        printf("🟢 ftc: ftc ou return %d files\n",count);
+    }
+    else {
+        printf("🔴 ftc: ftc ou return %d files not 2\n",count);
+        exit(1);
+    }
+}
+
 //main
 
 int main(int argc,char *argv[ ]) {
@@ -358,5 +397,7 @@ int main(int argc,char *argv[ ]) {
     testftcmime();
     testftcmimefaux();
     testftcctc();
+    //testftcctcnonascii();
+    testftcou();
     return 0;
 }
