@@ -77,6 +77,7 @@ tabflag getflag(int mainargc,char *mainargv[ ]){
             tab.tab[tab.size].flagname="-threads";
             tab.tab[tab.size].flagvalue=mainargv[i+1];
             tab.size++;
+            threads_mode = true;
             tab.tab=realloc(tab.tab,(tab.size+1)*sizeof(flag));
         }else if ( strcmp(mainargv[i], "-dir" ) == 0 ) {
             tab.tab[tab.size].isflag=true;
@@ -310,12 +311,7 @@ listfile* flagsize(char* size, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
-            if(testsize(size,listoffile->path)){
-                addfile(listfile2,listoffile->path);
-            }
-        }
-        listoffile=listoffile->next;
+        listoffile=flagsizerec(listoffile,listfile2,size);
     }
     if(!or_mode){
         
@@ -323,6 +319,15 @@ listfile* flagsize(char* size, listfile* listoffile){
         free(adresselist);
     }
     return listfile2;
+}
+
+listfile* flagsizerec(listfile* listoffile, listfile* listfile2,char* size){
+    if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
+            if(testsize(size,listoffile->path)){
+                addfile(listfile2,listoffile->path);
+            }
+    }
+    return listoffile->next;
 }
 
 //flag -name
@@ -334,18 +339,22 @@ listfile* flagname(char* name, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
-            if(testname(name,listoffile->path)){
-                addfile(listfile2,listoffile->path);
-            }
-        }
-        listoffile=listoffile->next;
+        listoffile=flagnamerec(listoffile,listfile2,name);
     }
     if(!or_mode){
         deleteListFile(adresselist->next,root);
         free(adresselist);
     }
     return listfile2;
+}
+
+listfile* flagnamerec(listfile* listoffile, listfile* listfile2,char* name){
+    if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
+            if(testname(name,listoffile->path)){
+                addfile(listfile2,listoffile->path);
+            }
+        }
+    return listoffile->next;
 }
 
 //flag -date
@@ -357,12 +366,7 @@ listfile* flagdate(char* date, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
-            if(testdate(listoffile->path,date)){
-                addfile(listfile2,listoffile->path);
-            }
-        }
-        listoffile=listoffile->next;
+        listoffile=flagdaterec(listoffile,listfile2,date);
     }
     if(!or_mode){
         
@@ -370,6 +374,15 @@ listfile* flagdate(char* date, listfile* listoffile){
         free(adresselist);
     }
     return listfile2;
+}
+
+listfile* flagdaterec(listfile* listoffile,listfile* listfile2,char* date){
+    if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
+            if(testdate(listoffile->path,date)){
+                addfile(listfile2,listoffile->path);
+            }
+        }
+    return listoffile->next;
 }
 
 //flag -mime
@@ -381,12 +394,7 @@ listfile* flagmime(char* mime, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
-            if(testmime(listoffile->path,mime)){
-                addfile(listfile2,listoffile->path);
-            }
-        }
-        listoffile=listoffile->next;
+        listoffile=flagmimerec(listoffile,listfile2,mime);
     }
     if(!or_mode){
         
@@ -394,6 +402,15 @@ listfile* flagmime(char* mime, listfile* listoffile){
         free(adresselist);
     }
     return listfile2;
+}
+
+listfile* flagmimerec(listfile* listoffile,listfile* listfile2,char* mime){
+    if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
+            if(testmime(listoffile->path,mime)){
+                addfile(listfile2,listoffile->path);
+            }
+        }
+    return listoffile->next;
 }
 
 //flag -perm
@@ -405,12 +422,7 @@ listfile* flagperm(char* perm, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
-            if(testperm(listoffile->path,perm)){
-                addfile(listfile2,listoffile->path);
-            }
-        }
-        listoffile=listoffile->next;
+        listoffile=flagpermrec(listoffile,listfile2,perm);
     }
     if(!or_mode){
         
@@ -418,6 +430,15 @@ listfile* flagperm(char* perm, listfile* listoffile){
         free(adresselist);
     }
     return listfile2;
+}
+
+listfile* flagpermrec(listfile* listoffile,listfile* listfile2,char* perm){
+    if ((is_regular_file(listoffile->path) && dir_mode == false)||(dir_mode == true && is_directory(listoffile->path))){
+            if(testperm(listoffile->path,perm)){
+                addfile(listfile2,listoffile->path);
+            }
+        }
+    return listoffile->next;
 }
 
 //flag -dir
@@ -429,15 +450,7 @@ listfile* flagdir(listfile* listoffile,char* name){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if(name == NULL){
-            if (is_directory(listoffile->path)){
-                addfile(listfile2,listoffile->path);
-            }
-        }else{if (is_directory(listoffile->path) && strcmp(basename(listoffile->path),name)==0){
-            addfile(listfile2,listoffile->path);
-        }
-        }
-        listoffile=listoffile->next;
+        listoffile=flagdirrec(listoffile,listfile2,name);
     }
     if(!or_mode){
         
@@ -447,6 +460,17 @@ listfile* flagdir(listfile* listoffile,char* name){
     return listfile2;
 }
 
+listfile* flagdirrec(listfile* listoffile,listfile* listfile2,char* name){
+    if(name == NULL){
+            if (is_directory(listoffile->path)){
+                addfile(listfile2,listoffile->path);
+            }
+        }else{if (is_directory(listoffile->path) && strcmp(basename(listoffile->path),name)==0){
+            addfile(listfile2,listoffile->path);
+        }
+        }
+    return listoffile->next;
+}
 
 //flag -ctc
 
@@ -457,12 +481,7 @@ listfile* flagctc(char* name, listfile* listoffile){
     listfile2->path=listoffile->path;
     listfile2->next=NULL;
     while(listoffile!=NULL){
-        if (is_regular_file(listoffile->path)){
-            if(testctc(listoffile->path,name)){
-                addfile(listfile2,listoffile->path);
-            }
-        }
-        listoffile=listoffile->next;
+        listoffile=flagctcrec(listoffile,listfile2,name);
     }
     if(!or_mode){
         
@@ -470,4 +489,13 @@ listfile* flagctc(char* name, listfile* listoffile){
         free(adresselist);
     }
     return listfile2;
+}
+
+listfile* flagctcrec(listfile* listoffile,listfile* listfile2,char* name){
+     if (is_regular_file(listoffile->path)){
+            if(testctc(listoffile->path,name)){
+                addfile(listfile2,listoffile->path);
+            }
+    }
+    return listoffile->next;
 }

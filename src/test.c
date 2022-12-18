@@ -359,7 +359,7 @@ void testftcctcnonascii(){
 //test ftc ou
 void testftcou(){
     printf("test ftc ou:\n");
-    system("./ftc ./ -name *.c -name *.h -ou >test.txt");
+    system("./ftc ./ -name src -name includes -ou >test.txt");
     FILE* file = fopen("test.txt", "r");
     int count = 0;
     char line[2056];

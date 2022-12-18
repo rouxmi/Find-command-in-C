@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <libgen.h>
+#include <pthread.h>
 #include "../includes/name.h"
 #include "../includes/size.h"
 #include "../includes/date.h"
@@ -65,3 +66,18 @@ listfile* flagperm(char* perm, listfile* listoffile);
 listfile* flagdir(listfile* listoffile, char* name);
 
 listfile* flagctc(char* name, listfile* listoffile);
+
+listfile* flagsizerec(listfile* listoffile, listfile* listfile2,char* size);
+
+listfile* flagctcrec(listfile* listoffile,listfile* listfile2,char* name);
+
+listfile* flagdirrec(listfile* listoffile,listfile* listfile2,char* name);
+
+
+listfile* flagpermrec(listfile* listoffile,listfile* listfile2,char* perm);
+
+listfile* flagmimerec(listfile* listoffile,listfile* listfile2,char* mime);
+
+listfile* flagdaterec(listfile* listoffile,listfile* listfile2,char* date);
+
+listfile* flagnamerec(listfile* listoffile, listfile* listfile2,char* name);
